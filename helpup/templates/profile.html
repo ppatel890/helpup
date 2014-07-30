@@ -1,0 +1,31 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+    <p>Profile Page</p>
+
+    <div class="projects" style="float: right">
+
+            {% for project in projects %}
+                <div class="projectPane" style="border: 3px black solid; margin: 1px">
+                    <p>{{ project.title }}</p>
+                    <p>{{ project.description }}</p>
+                </div>
+            {% endfor %}
+
+
+    </div>
+
+
+    <button id="newProjectBtn">Start new Project</button>
+    <a href="{% url 'project_map' %}"><button>Search By Location</button></a>
+
+
+
+    <div id="newProject" style="display: none">
+            <p>Project Title: <input type="text" id="projectTitle"></p>
+            <p>Description: <input type="text" id="projectDescription"></p>
+            <p>Zip Code: <input type="text" id="projectZip"></p>
+            <input type="submit" value="Create Project" id="createProject">
+    </div>
+
+{% endblock %}
