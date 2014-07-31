@@ -9,12 +9,15 @@ $(document).ready(function(){
         var title=$('#projectTitle').val();
         var description=$('#projectDescription').val();
         var location=$('#projectZip').val();
+        var picture=$('#projectImage').val();
         newProject.title = title;
         newProject.description = description;
         newProject.location = location;
+        newProject.picture = picture;
         console.log(title);
         console.log(description);
         console.log(location);
+        console.log(picture);
 
 
         $.ajax({
@@ -53,6 +56,58 @@ $(document).ready(function(){
 
         });
     });
+
+
+    $.ajax({
+        url: '/get_project/',
+        type: 'GET',
+        data: 'json',
+        success: function(response){
+            console.log(response);
+//            $('#projectTitle1').html(response.title);
+//            $('#projectName1').html(response.title);
+//            $('#projectDescription1').html(response.description);
+            for (i=0; i<6; i++) {
+                project = response.project_list[i];
+                panel = i + 1;
+                $('#projectTitle' + panel).html(project.title);
+                $('#projectName' + panel).html(project.title);
+                $('#projectDescription' + panel).html(project.description);
+                console.log(project.image);
+                var imgsrc= "{% static 'media/project_images/drose.jpg' %}";
+                $('#projectImg'+ panel).html("<img src='media/"+project.image+"' class='img-responsive thumImg' alt=''>");
+                $('#projectImgModal'+ panel).html("<img src='media/"+project.image+"' class='img-responsive' alt=''>");
+                $('#studentModal' + panel).html(project.first_name);
+                $('#donate' + panel).html("<a href='/view_project/" + project.id + "'><button class='btn btn-success'>Donate Now!</button></a><br><br>")
+
+
+
+            }
+        },
+        error:function(response){
+            console.log(response)
+        }
+
+    });
+
+    $.ajax({
+        url: '/get_user_project/',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response){
+            console.log(response);
+            for(i=0; i<response.project_list.length; i++){
+                project = response.project_list[i];
+                $('#projectList').append("<a href='/view_project/"+project.id+"' class='list-group-item'>"+project.title+"</a>")
+            }
+
+        },
+        error: function(response){
+            console.log(response)
+        }
+    });
+
+
 
     var locationArray = [];
     $.ajax({
@@ -129,6 +184,11 @@ $(document).ready(function(){
 
 
     google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+
+
 
 });
 

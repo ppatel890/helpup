@@ -15,6 +15,7 @@ class Project(models.Model):
     donor = models.ForeignKey(User, related_name='donor_projects', null=True)
     lat = models.FloatField(null=True)
     lng = models.FloatField(null=True)
+    picture = models.ImageField(upload_to='project_images', blank=True, null=True)
 
     def __unicode__(self):
         return "{}'s project {}".format(self.student, self.title)

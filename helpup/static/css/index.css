@@ -1,0 +1,41 @@
+
+
+#loginModal .modal-content{
+    padding: 20px 25px;
+    width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+#loginModal{
+    padding: 20px 25px;
+}
+
+
+.project-info{
+    margin-top: 120px;
+}
+
+.profile-info{
+    margin-top: 120px;
+}
+
+.profile-name{
+    margin: auto;
+    /*text-align: center;*/
+}
+
+footer{
+    max-height: 20%;
+}
+
+#projectModal .modal-content{
+    padding: 20px 25px;
+    width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+.mapDiv {
+    margin-top: 120px;
+}

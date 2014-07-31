@@ -12,9 +12,16 @@
     </script>
 {% endblock %}
 
+
+
 {% block content %}
-    <input type="text" id="searchVal">
-    <button id="searchBtn" onclick="codeAddress()">Search</button>
-    <div id="map-canvas"></div>
+
+        <div class="mapDiv">
+            <input type="text" id="searchVal">
+            <button id="searchBtn" onclick="codeAddress()">Search</button>
+        </div>
+        <div id="map-canvas"></div>
+
+
 
 {% endblock %}

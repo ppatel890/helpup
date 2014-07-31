@@ -1,31 +1,113 @@
 {% extends 'base_template.html' %}
 
+
+
 {% block content %}
-    <p>Profile Page</p>
+    <div class="container profile-info">
+        <!-- Page Content -->
+    <div class="container">
 
-    <div class="projects" style="float: right">
+        <div class="row">
 
-            {% for project in projects %}
-                <div class="projectPane" style="border: 3px black solid; margin: 1px">
-                    <p>{{ project.title }}</p>
-                    <p>{{ project.description }}</p>
+            <div class="col-md-3">
+                <p class="lead">Current Projects</p>
+                <div class="list-group" id="projectList">
+
                 </div>
-            {% endfor %}
+            </div>
 
+            <div class="col-md-9">
+
+                <div class="thumbnail">
+{#                    <img class="img-responsive" src="http://placehold.it/800x300" alt="">#}
+                    <div class="caption-full">
+
+                        <h2 class="profile-name">{{ user.username }}</h2><br>
+
+                        <p><strong>Contact Info:</strong></p>
+                            <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+                            <p>Email: {{ user.email }}</p>
+
+                    </div>
+                    <a href="#projectModal" data-toggle="modal"><button>Create New Project</button></a>
+                </div>
+            </div>
+
+        </div>
 
     </div>
-
-
-    <button id="newProjectBtn">Start new Project</button>
-    <a href="{% url 'project_map' %}"><button>Search By Location</button></a>
-
-
-
-    <div id="newProject" style="display: none">
-            <p>Project Title: <input type="text" id="projectTitle"></p>
-            <p>Description: <input type="text" id="projectDescription"></p>
-            <p>Zip Code: <input type="text" id="projectZip"></p>
-            <input type="submit" value="Create Project" id="createProject">
     </div>
+    <div class="modal fade" id="projectModal">
+
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <h2>Create a new Project</h2>
+            <hr class="star-primary">
+            <div id="newProject">
+                <p>Project Title: <input type="text" id="projectTitle"></p>
+                <p>Description: <input type="text" id="projectDescription"></p>
+                <p>Zip Code: <input type="text" id="projectZip"></p>
+                <p>Project Image: <input type="file" name="img" id="projectImg"></p>
+                <input type="submit" value="Create Project" id="createProject">
+            </div>
+{#            <div id="newProject">#}
+{#            <p>Project Title: <input type="text" id="projectTitle"></p>#}
+{#            <p>Description: <input type="text" id="projectDescription"></p>#}
+{#            <p>Zip Code: <input type="text" id="projectZip"></p>#}
+{#            <p>Project Image: <input type="file" name="img" id="projectImg"></p>#}
+
+{#            <form method="post" action="/new_project/">#}
+{#                {% csrf_token %}#}
+{#                <p><label for="id_title">Project Title:</label> <input id="id_title" maxlength="150" name="title" type="text" /></p>#}
+{#                <p><label for="id_description">Description:</label> <input id="id_description" name="description" type="text" /></p>#}
+{#                <p><label for="id_location">Zip Code:</label> <input id="id_location" maxlength="6" name="location" type="text" /></p>#}
+{#                <p><label for="id_picture">Picture:</label> <input id="id_picture" name="picture" type="file" /></p>#}
+{##}
+{##}
+{##}
+{#                <input type="submit" value="Create Project" >#}
+{#            </form>#}
+{#            </div>#}
+
+        </div>
+    </div>
+
+{#    <div class="projects" style="float: right">#}
+{##}
+{#    {% for project in projects %}#}
+{#        <div class="projectPane" style="border: 3px black solid; margin: 1px">#}
+{#            <p>{{ project.title }}</p>#}
+{#            <p>{{ project.description }}</p>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{##}
+{##}
+{#    </div>#}
+{##}
+{##}
+{#    <button id="newProjectBtn">Start new Project</button>#}
+{#    <a href="{% url 'project_map' %}"><button>Search By Location</button></a>#}
+{##}
+{##}
+{##}
+{#    <div id="newProject" style="display: none">#}
+{#            <p>Project Title: <input type="text" id="projectTitle"></p>#}
+{#            <p>Description: <input type="text" id="projectDescription"></p>#}
+{#            <p>Zip Code: <input type="text" id="projectZip"></p>#}
+{#            <p>Project Image: <input type="file" name="img" id="projectImg"></p>#}
+{#            <input type="submit" value="Create Project" id="createProject">#}
+{#    </div>#}
+{##}
+{##}
+{#    </div>#}
+
+
+
+
 
 {% endblock %}
