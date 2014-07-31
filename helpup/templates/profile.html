@@ -29,7 +29,7 @@
                             <p>Email: {{ user.email }}</p>
 
                     </div>
-                    <a href="#projectModal" data-toggle="modal"><button>Create New Project</button></a>
+                    <a href="#projectModal" data-toggle="modal"><button class="btn btn-success btn-large">Create New Project</button></a>
                 </div>
             </div>
 
@@ -52,8 +52,8 @@
                 <p>Project Title: <input type="text" id="projectTitle"></p>
                 <p>Description: <input type="text" id="projectDescription"></p>
                 <p>Zip Code: <input type="text" id="projectZip"></p>
-                <p>Project Image: <input type="file" name="img" id="projectImg"></p>
-                <input type="submit" value="Create Project" id="createProject">
+{#                <p>Project Image: <input type="file" name="image" id="projectImg"></p>#}
+                <input class="btn btn-default" type="submit" value="Create Project" id="createProject">
             </div>
 {#            <div id="newProject">#}
 {#            <p>Project Title: <input type="text" id="projectTitle"></p>#}

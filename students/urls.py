@@ -22,7 +22,8 @@ urlpatterns = patterns('',
     url(r'^get_project/$', 'helpup.views.get_project', name='get_project'),
     url(r'^view_project/(?P<project_id>\w+)/$', 'helpup.views.view_project', name='view_project'),
     url(r'^get_user_project/$', 'helpup.views.get_user_project', name='get_user_project'),
-    url(r'^form/$', 'helpup.views.form', name='form')
+    url(r'^form/$', 'helpup.views.form', name='form'),
+    url(r'^upload_picture/(?P<project_id>\w+)/$', 'helpup.views.upload_picture', name='upload_picture'),
 
 )
 

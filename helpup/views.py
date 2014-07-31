@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
-from helpup.forms import CustomUserCreationForm, CreateProjectForm
+from helpup.forms import CustomUserCreationForm, AddPicture
 from helpup.models import Project
 
 
@@ -114,7 +114,20 @@ def get_project(request):
 
 def view_project(request, project_id):
     project = Project.objects.get(id=project_id)
-    data={'project': project}
+    form = AddPicture(instance=project)
+    data={'project': project, 'form': form}
+
+    if request.method == 'POST':
+        print "posted"
+        form = AddPicture(request.POST, instance=project)
+        print form
+        if form.is_valid():
+            print 'form valid'
+            form.save()
+            return redirect('home')
+    else:
+        form=AddPicture()
+
     return render(request, 'view_project.html', data)
 
 
@@ -133,7 +146,28 @@ def get_user_project(request):
     return HttpResponse(json.dumps(data), content_type='application/json')
 
 def form(request):
-    form = CreateProjectForm()
+    form = AddPicture()
 
     data = {'form': form}
     return render(request, 'form.html', data)
+
+
+
+def upload_picture(request, project_id):
+    project = Project.objects.get(pk=project_id)
+    if request.method == 'POST':
+        print 'post'
+        form = AddPicture(request.POST, request.FILES, instance=project)
+        print form
+        if form.is_valid():
+            print "form valid"
+            if form.save():
+                print 'formsaved'
+                return redirect('/view_project/'+project_id)
+    else:
+        form=AddPicture(instance=project)
+    data = {'project': project, 'form': form}
+    return render(request, 'upload_picture.html', data)
+
+
+

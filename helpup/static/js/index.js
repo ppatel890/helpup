@@ -9,15 +9,14 @@ $(document).ready(function(){
         var title=$('#projectTitle').val();
         var description=$('#projectDescription').val();
         var location=$('#projectZip').val();
-        var picture=$('#projectImage').val();
         newProject.title = title;
         newProject.description = description;
         newProject.location = location;
-        newProject.picture = picture;
+
         console.log(title);
         console.log(description);
         console.log(location);
-        console.log(picture);
+
 
 
         $.ajax({

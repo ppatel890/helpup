@@ -1,0 +1,33 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row update-project">
+        <div class="col-lg-5 col-lg-offset-3">
+            <h2>{{ project.title }}</h2>
+            <form enctype="multipart/form-data" method="post" action=".">
+            {% csrf_token %}
+{#            <p>Title: {{ form.title }}</p>#}
+{#            <p>Description: {{ form.description }}</p>#}
+{#            <p>Picture: {{ form.picture }}</p>#}
+{##}
+{#            {{ form.date_created }}#}
+{#            {{ form.location }}#}
+{#            {{ form.studnt }}#}
+{#            {{ form.donor }}#}
+{#            {{ form.lat }}#}
+{#            {{ form.lng }}#}
+
+            {{ form.as_p }}
+
+
+            <input class='btn btn-default' type="submit" value="Update">
+            </form>
+
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

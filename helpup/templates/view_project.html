@@ -39,8 +39,16 @@
             <div class="col-md-9 col-md-offset-1">
 
                 <div class="thumbnail">
-                    <img class="img-responsive" src="{{ project.picture.url }}" alt="">
+                    {% if project.picture %}
+                        <img class="img-responsive" src="{{ project.picture.url }}" alt="http://placehold.it/800x300">
+                    {% else %}
+                        <img class="img-responsive" src="http://placehold.it/800x300" alt="">
+                    {% endif %}
+{#                    <img class="img-responsive" src="{{ project.picture.url }}" alt="http://placehold.it/800x300">#}
                     <div class="caption-full">
+                        <br>
+                        <a href="{% url 'upload_picture' project.id %}"><button class="btn btn-default">Update Project</button></a>
+
                         <h4 class="pull-right">PUT MONEY NEEDED HERE</h4>
                         <h4><a href="#">{{ project.title }}</a>
                         </h4>
@@ -122,5 +130,7 @@
         </div>
 
     </div>
+
+
 
 {% endblock %}
