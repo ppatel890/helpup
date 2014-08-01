@@ -35,6 +35,7 @@ def register(request):
 
 @csrf_exempt
 def new_project(request):
+    # So what happens if it's not POST request?
     if request.method == "POST":
         # form = CreateProjectForm(request.POST, request.FILES)
         # if form.is_valid():
@@ -61,7 +62,12 @@ def new_project(request):
             lng=lng,
             amount=amount,
         )
-
+        
+        # Everything below here is unnecessary. You are getting the data from the AJAX request, and you use it to make 
+        # a new Project object. That makes sense. BUT what doesn't make sense is you passing that same data back
+        # down to the JS. The entire point of using AJAX is that the user doesn't need to wait for a server roundtrip
+        # to see data update on the page. The convention is to send an AJAX request, and while that's off doing it's
+        # thing, your JS has already appended the new project into your list in the template
         project_info = {
             'title': new_project.title,
             'descriptions': new_project.description,
@@ -101,6 +107,12 @@ def get_location(request):
 
 @csrf_exempt
 def get_project(request):
+    # This view and it's corresponding AJAX request are perfectly legitimate, but not the way to go here.
+    # Instead of sending back JSON data and then messily creating HTML strings in your JS, this Django view
+    # should just return a partial HTML template
+    
+    # Also, since you are only loading 5 of these in your template, you shouldn't call all your Project objects.
+    # You should limit to 5 in your view
     projects = Project.objects.all()
     project_list = []
     for project in projects:
@@ -194,6 +206,7 @@ def make_donation(request):
             donor=donor,
             date=datetime.now()
         )
+        # Stray print statements should not be left in your code when you are finished debugging
         print project.donate
         print type(new_donation.donation_amount)
         project.donate = project.donate + float(new_donation.donation_amount)
