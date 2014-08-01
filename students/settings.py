@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'helpup',
     'south',
+    'stripe'
 )
 
 MIDDLEWARE_CLASSES = (

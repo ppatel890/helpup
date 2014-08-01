@@ -1,5 +1,7 @@
 {% extends 'base_template.html'%}
 
+{% load staticfiles %}
+
 {% block head %}
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <style type="text/css">
@@ -10,6 +12,8 @@
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmXQO4kik_QT8QPmzZ2_teiGUak9t1rQc">
     </script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="{% static 'js/maps.js' %}"></script>
 {% endblock %}
 
 
@@ -18,7 +22,7 @@
 
         <div class="mapDiv">
             <input type="text" id="searchVal">
-            <button id="searchBtn" onclick="codeAddress()">Search</button>
+            <button class='btn btn-default' id="searchBtn" onclick="codeAddress()">Search</button>
         </div>
         <div id="map-canvas"></div>
 

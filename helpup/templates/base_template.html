@@ -38,7 +38,7 @@
   </head>
   <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top navCustom">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -57,21 +57,18 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="page-scroll">
+                    <li class="page-scroll navBarBtn">
                         <a href="#portfolio">Projects</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
-                    </li>
                     {% if user.is_authenticated %}
-                            <li class="page-sroll">
-                                <a href="{% url 'profile' %}" class="portfolio-link">Profile</a>
+                            <li class="page-scroll navBarBtn">
+                                <a href="{% url 'profile' %}" class="portfolio-link navBarBtn">Profile</a>
                             </li>
-                            <li class="page-scroll">
+                            <li class="page-scroll navBarBtn">
                                 <a href="{% url 'logout' %}" class="portfolio-link">Logout</a>
                             </li>
                     {% else %}
-                        <li class="page-scroll">
+                        <li class="page-scroll navBarBtn">
                             <a href="#loginModal" class="portfolio-link" data-toggle="modal">Login</a>
                         </li>
 
@@ -97,8 +94,17 @@
                         <span class="name">Helpup</span>
                         <hr class="star-light">
                         <span class="skills">Provide Students the help they need to succeed</span><br>
-{#                        <span><input type="text" placeholder="Find Projects Near You"></span>#}
+                        <span class="skills">Find Projects Near You: </span>
+                        <span><input id='googleSearch' type="text" placeholder="Zip Code"></span>
+
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    {% if not user.is_authenticated %}
+                        <a href="#registrationModal" data-toggle="modal"><button class="btn btn-default regBtn">Register Now</button></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -113,6 +119,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
+
                     <h2>Top Projects</h2>
                     <hr class="star-primary">
                 </div>
@@ -194,81 +201,36 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="success" id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>About</h2>
-                    <hr class="star-light">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultrices ligula et diam accumsan, vitae porta dolor viverra. Nullam accumsan neque purus, vel bibendum tellus condimentum at. Aliquam sed lectus eros. Sed vel enim auctor, dapibus nulla eget, ornare nunc. Integer sit amet lobortis erat. Aliquam erat volutpat. Praesent risus felis, gravida vel sagittis ut, vestibulum in erat. Ut sit amet consequat nunc, eu facilisis nisi. Praesent sagittis leo lorem.
-
-</p>
-                </div>
-                <div class="col-lg-4">
-                    <p>Mauris scelerisque felis et quam porta gravida. Curabitur et lacus a magna vestibulum bibendum. Sed gravida, magna sit amet feugiat auctor, mauris metus pellentesque nulla, sit amet ornare eros leo sit amet velit. Fusce mauris orci, malesuada eu orci a, viverra condimentum diam. Morbi mollis a augue sit amet convallis. Nunc quis consequat velit. Vestibulum volutpat imperdiet posuere.</p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
+{#    <!-- About Section -->#}
+{#    <section class="success" id="about">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-lg-12 text-center">#}
+{#                    <h2>About</h2>#}
+{#                    <hr class="star-light">#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="row">#}
+{#                <div class="col-lg-4 col-lg-offset-2">#}
+{#                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultrices ligula et diam accumsan, vitae porta dolor viverra. Nullam accumsan neque purus, vel bibendum tellus condimentum at. Aliquam sed lectus eros. Sed vel enim auctor, dapibus nulla eget, ornare nunc. Integer sit amet lobortis erat. Aliquam erat volutpat. Praesent risus felis, gravida vel sagittis ut, vestibulum in erat. Ut sit amet consequat nunc, eu facilisis nisi. Praesent sagittis leo lorem.#}
+{##}
+{#</p>#}
+{#                </div>#}
+{#                <div class="col-lg-4">#}
+{#                    <p>Mauris scelerisque felis et quam porta gravida. Curabitur et lacus a magna vestibulum bibendum. Sed gravida, magna sit amet feugiat auctor, mauris metus pellentesque nulla, sit amet ornare eros leo sit amet velit. Fusce mauris orci, malesuada eu orci a, viverra condimentum diam. Morbi mollis a augue sit amet convallis. Nunc quis consequat velit. Vestibulum volutpat imperdiet posuere.</p>#}
+{#                </div>#}
+{#                <div class="col-lg-8 col-lg-offset-2 text-center">#}
 {#                    <a href="#" class="btn btn-lg btn-outline">#}
 {#                        <i class="fa fa-download"></i> Download Theme#}
 {#                    </a>#}
-                </div>
-            </div>
-        </div>
-    </section>
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
 
 
 
-    <!-- Footer -->
-    <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                        <h3>Location</h3>
-                        <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>Around the Web</h3>
-                        <ul class="list-inline">
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>About Freelancer</h3>
-                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-below">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        Copyright &copy; Pavan Patel 2014
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll visible-xs visble-sm">
@@ -496,7 +458,56 @@
         </div>
     </div>
 
+
+
     {% endblock %}
+
+        <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+{#                    <div class="footer-col col-md-4">#}
+{#                        <h3>Location</h3>#}
+{#                        <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>#}
+{#                    </div>#}
+{#                    <div class="footer-col col-md-4">#}
+{#                        <h3>Around the Web</h3>#}
+{#                        <ul class="list-inline">#}
+{#                            <li>#}
+{#                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>#}
+{#                            </li>#}
+{#                            <li>#}
+{#                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>#}
+{#                            </li>#}
+{#                            <li>#}
+{#                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>#}
+{#                            </li>#}
+{#                            <li>#}
+{#                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>#}
+{#                            </li>#}
+{#                            <li>#}
+{#                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                    <div class="footer-col col-md-4">#}
+{#                        <h3>About Freelancer</h3>#}
+{#                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>#}
+{#                    </div>#}
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Pavan Patel 2014
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 
      <div class="modal fade" id="loginModal">
@@ -516,6 +527,33 @@
                 <p><label for="id_password">Password:</label> <input id="id_password" name="password" type="password" /></p>
 
                 <input type="submit" value="Log in" class="btn btn-default">
+            </form>
+        </div>
+    </div>
+
+
+     <div class="modal fade" id="registrationModal">
+
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <h2 style="text-align: center">Create an account</h2>
+            <hr class="star-primary">
+
+            <form method="post" action="/register/">
+                <input type='hidden' name='csrfmiddlewaretoken' value='DkwYotKZc8O3XKCzFjsuVkxm7rRTtzVP' />
+                <p><label for="id_first_name">First name:</label> <input id="id_first_name" maxlength="50" name="first_name" type="text" /></p>
+                <p><label for="id_last_name">Last name:</label> <input id="id_last_name" maxlength="50" name="last_name" type="text" /></p>
+                <p><label for="id_username">Username:</label> <input id="id_username" maxlength="30" name="username" type="text" /></p>
+                <p><label for="id_email">Email:</label> <input id="id_email" name="email" type="email" /></p>
+                <p><label for="id_password1">Password:</label> <input id="id_password1" name="password1" type="password" /></p>
+                <p><label for="id_password2">Password confirmation:</label> <input id="id_password2" name="password2" type="password" /></p>
+
+                <input class='btn btn-group' type="submit" value="Submit">
             </form>
         </div>
     </div>

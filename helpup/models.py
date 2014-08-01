@@ -16,7 +16,24 @@ class Project(models.Model):
     lat = models.FloatField(null=True)
     lng = models.FloatField(null=True)
     picture = models.ImageField(upload_to='project_images', blank=True, null=True)
+    amount = models.FloatField()
+    donate = models.FloatField(default=0)
 
     def __unicode__(self):
         return "{}'s project {}".format(self.student, self.title)
+
+    def find_remaining(self):
+        return '{:20,.2f}'.format(self.amount - self.donate)
+
+
+class Donation(models.Model):
+    donation_amount = models.FloatField()
+    project = models.ForeignKey(Project, related_name='project_donations')
+    donor = models.ForeignKey(User, related_name='donor_donations')
+    date = models.DateField()
+
+    def __unicode__(self):
+        return "{}'s donation to {}".format(self.donor, self.project)
+
+
 

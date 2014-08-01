@@ -2,6 +2,7 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$/helpup/templates/base_template.html" libraries="{jquery}" />
+    <file url="file://$PROJECT_DIR$/helpup/templates/view_project.html" libraries="{checkout}" />
   </component>
 </project>
 

@@ -5,30 +5,6 @@
 {% endblock %}
 
 {% block content %}
-{#<div class="container">#}
-{#    <div class="row project-info" >#}
-{##}
-{##}
-{#        <div class="col-lg-6">#}
-{#            <div class="row">#}
-{#                <div class="col-lg-5">#}
-{#                   <h2>{{ project.title }}</h2>#}
-{#                </div>#}
-{##}
-{#            </div>#}
-{#            <div class="row">#}
-{#                {{ project.student.first_name }}#}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#         <div class="col-lg-6 col-lg-offset-8">#}
-{#             <img width="300px" src="{{ project.picture.url }}"#}
-{#        </div>#}
-{##}
-{#    </div>#}
-{#</div>#}
-
-
 <!-- Page Content -->
     <div class="container">
 
@@ -39,6 +15,7 @@
             <div class="col-md-9 col-md-offset-1">
 
                 <div class="thumbnail">
+                    <h2 style="text-align: center; color:#18bc9c;">{{ project.title }}</h2>
                     {% if project.picture %}
                         <img class="img-responsive" src="{{ project.picture.url }}" alt="http://placehold.it/800x300">
                     {% else %}
@@ -47,31 +24,34 @@
 {#                    <img class="img-responsive" src="{{ project.picture.url }}" alt="http://placehold.it/800x300">#}
                     <div class="caption-full">
                         <br>
-                        <a href="{% url 'upload_picture' project.id %}"><button class="btn btn-default">Update Project</button></a>
+{#                        <a href="{% url 'upload_picture' project.id %}"><button class="btn btn-default">Update Project</button></a>#}
+                        <div><p>${{ project.find_remaining}} Needed to reach this goal</p></div>
+                        <a class='pull-right donateBtn' href="#donateModal" data-toggle="modal"><button class="btn btn-success  btnCustom donateBtn">Donate Now</button></a>
 
-                        <h4 class="pull-right">PUT MONEY NEEDED HERE</h4>
-                        <h4><a href="#">{{ project.title }}</a>
-                        </h4>
+
                         <p><strong>Student Name:</strong> {{ project.student.first_name }} {{ project.student.last_name }}</p>
-{#                        <p>Want to make these reviews work? Check out#}
-{#                            <strong><a href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this building a review system tutorial</a>#}
-{#                            </strong>over at maxoffsky.com!</p>#}
                         <p><strong>Description:</strong> {{ project.description }}</p>
 
                     </div>
-{#                    <div class="ratings">#}
-{#                        <p class="pull-right">3 reviews</p>#}
-{#                        <p>#}
-{#                            <span class="glyphicon glyphicon-star"></span>#}
-{#                            <span class="glyphicon glyphicon-star"></span>#}
-{#                            <span class="glyphicon glyphicon-star"></span>#}
-{#                            <span class="glyphicon glyphicon-star"></span>#}
-{#                            <span class="glyphicon glyphicon-star-empty"></span>#}
-{#                            4.0 stars#}
-{#                        </p>#}
-{#                    </div>#}
-                </div>
 
+                </div>
+                <div class="well">
+                    <div class="text-left">
+                        <h3>People who have donated</h3>
+                    </div>
+                    <hr>
+                     {% for donation in donations %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Donor: {{ donation.donor }}</p>
+                                <p class="pull-right">Amount: ${{ donation.donation_amount }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                     {% endfor %}
+
+
+                </div>
 {#                <div class="well">#}
 {##}
 {#                    <div class="text-right">#}
@@ -130,6 +110,56 @@
         </div>
 
     </div>
+
+     <div class="modal fade" id="donateModal">
+
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <h2>Make Your Donation</h2>
+            <hr class="star-primary">
+{#            <form method="post" action="/login/">#}
+{#                <p>Donation Amount: <input id="donation_amount" name="donation_amount" step="any" type="number"></p>#}
+{#                <input type="submit" value="Donate">#}
+{#            </form>#}
+
+            <div class="donationInput">
+                <p>Donation Amount: <input id="donation_amount" name="donation_amount" step="any" type="number"></p>
+                <input type="hidden" name="project_id" class='projectID' value="{{ project.id }}">
+                <button class='btn btn-default' id="movePayment">Move to Payment</button>
+            </div>
+            <div class="thanksDonate" style="display: none">
+                <p>Thanks for Donating!</p>
+            </div>
+
+            <div class="stripeDiv" style="display: none">
+                <form action="/charge/" method="POST">
+                  <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_4V8sFPGyR79fKgbKT2ymeYEE"
+                    data-amount="2000"
+                    data-name="Demo Site"
+                    data-description="2 widgets ($20.00)"
+                    data-image="/128x128.png">
+                  </script>
+                  <script type="text/javascript">
+                    $(function(){
+                        $('#movePayment').click(function(event){
+                            var amount = $('#donation_amount').val();
+                            $('stripe-button').attr('data-amount', amount)
+                        });
+                    });
+                  </script>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
 
 

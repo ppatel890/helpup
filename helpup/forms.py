@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from helpup.models import Project
+from helpup.models import Project, Donation
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -33,6 +33,11 @@ class AddPicture(ModelForm):
     class Meta:
         model=Project
         fields = ['picture', 'title', 'description', 'date_created','location', 'student', 'donor', 'lat', 'lng']
+
+
+class DonateForm(ModelForm):
+    class Meta:
+        model = Donation
 
 
 
