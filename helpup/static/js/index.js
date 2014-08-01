@@ -121,8 +121,8 @@ $(document).ready(function(){
             key: "pk_test_4V8sFPGyR79fKgbKT2ymeYEE",
             amount: donationAmount*100,
             name: 'Demo Site',
-            description: '2 widgets ($20.00)',
-            image:"/128x128.png"
+            description: 'Make Your Donation Here'
+//            image:"/128x128.png"
 
         });
 

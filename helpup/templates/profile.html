@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <p>Project: <a href="{% url 'view_project' donation.project.id %}">{{ donation.project.title }}</a></p>
-                                <p class="pull-right">Amount: ${{ donation.donation_amount }}</p>
+                                <p class="pull-right">Amount: ${{ donation.format_amount }}</p>
                             </div>
                         </div>
                         <hr>

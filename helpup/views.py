@@ -123,7 +123,8 @@ def view_project(request, project_id):
     project = Project.objects.get(id=project_id)
     donations = Donation.objects.filter(project=project)
     form = AddPicture(instance=project)
-    data={'project': project, 'form': form, 'donations': donations}
+    user = request.user
+    data={'project': project, 'form': form, 'donations': donations, 'user': user}
 
     if request.method == 'POST':
         print "posted"

@@ -35,5 +35,8 @@ class Donation(models.Model):
     def __unicode__(self):
         return "{}'s donation to {}".format(self.donor, self.project)
 
+    def format_amount(self):
+        return '{:20,.2f}'.format(self.donation_amount)
+
 
 
