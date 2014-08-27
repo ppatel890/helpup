@@ -10,6 +10,7 @@ $(document).ready(function(){
     var locationArray = [];
     $.ajax({
         url: '/get_location/',
+
         type: 'GET',
         data: 'json',
         success:function(response){
