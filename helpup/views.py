@@ -15,6 +15,7 @@ from helpup.models import Project, Donation
 def home(request):
     return render(request, 'base_template.html', {'user': request.user})
 
+# Shows list of users projects and past donations
 @login_required()
 def profile(request):
     projects = Project.objects.filter(student=request.user)
@@ -33,25 +34,20 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+
+#Creates an instance of a new project in database
 @csrf_exempt
 def new_project(request):
     if request.method == "POST":
-        # form = CreateProjectForm(request.POST, request.FILES)
-        # if form.is_valid():
-        #     title = form.cleaned_data['title']
-        #     description = form.cleaned_data['description']
-        #     location = form.cleaned_data['location']
         data = json.loads(request.body)
         title = data['title']
         description = data['description']
         location = data['location']
-        lng=data['lng']
-        lat=data['lat']
-        amount=data['amount']
-        # picture=data['picture']
+        lng = data['lng']
+        lat = data['lat']
+        amount = data['amount']
 
-        # print picture
-        new_project=Project.objects.create(
+        new_project = Project.objects.create(
             title=title,
             date_created=datetime.today(),
             description=description,
@@ -73,15 +69,10 @@ def new_project(request):
         return HttpResponse(json.dumps(project_info), content_type='application/json')
 
 
-
-
-
-
-
-
 def project_map(request, zipcode):
     return render(request, 'maps.html')
 
+#Gets the lat lng and project information of all projects for google maps
 @csrf_exempt
 def get_location(request):
     projects = Project.objects.all()
@@ -97,6 +88,7 @@ def get_location(request):
         project_list.append(project_info)
     data = {'project_list': project_list}
     return HttpResponse(json.dumps(data), content_type='application/json')
+
 
 
 @csrf_exempt
@@ -179,6 +171,8 @@ def upload_picture(request, project_id):
     data = {'project': project, 'form': form}
     return render(request, 'upload_picture.html', data)
 
+
+# Creates an instance of a donation for project, and updates the amount needed
 @csrf_exempt
 def make_donation(request):
     if request.method == 'POST':
