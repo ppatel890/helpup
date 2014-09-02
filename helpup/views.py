@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
@@ -28,8 +29,11 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            user = form.save()
+            new_user = authenticate(username=request.POST['username'],
+                                    password=request.POST['password1'])
+            login(request, new_user)
+            return redirect('profile')
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
@@ -93,7 +97,7 @@ def get_location(request):
 
 @csrf_exempt
 def get_project(request):
-    projects = Project.objects.all()
+    projects = Project.objects.all()[:6]
     project_list = []
     for project in projects:
         project_info = {
@@ -188,11 +192,8 @@ def make_donation(request):
             donor=donor,
             date=datetime.now()
         )
-        print project.donate
-        print type(new_donation.donation_amount)
         project.donate = project.donate + float(new_donation.donation_amount)
         project.save()
-        print project.donate
         donation_info = {
             'amount': new_donation.donation_amount,
             'project': new_donation.project.title,
@@ -229,5 +230,7 @@ def charge(request):
     return render(request, 'charge.html')
 
 
+def stripe_setup(request):
+    return render(request, 'stripe_setup.html')
 
 

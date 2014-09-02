@@ -105,7 +105,7 @@ $(document).ready(function(){
         StripeCheckout.open({
             key: "pk_test_4V8sFPGyR79fKgbKT2ymeYEE",
             amount: donationAmount*100,
-            name: 'Demo Site',
+            name: 'Help Up',
             description: 'Make Your Donation Here'
 //            image:"/128x128.png"
 
