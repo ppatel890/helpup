@@ -1,27 +1,18 @@
 $(document).ready(function(){
 
-    $('#newProjectBtn').on('click', function(){
-        $('#newProject').toggle()
-    });
-
+    // Sends information from create project modal to database
     $('#createProject').on('click', function(){
         var newProject = {};
         var title=$('#projectTitle').val();
         var description=$('#projectDescription').val();
         var location=$('#projectZip').val();
-        var ammount = $('#projectAmount').val();
+        var amount = $('#projectAmount').val();
         newProject.title = title;
         newProject.description = description;
         newProject.location = location;
-        newProject.amount = ammount;
+        newProject.amount = amount;
 
-        console.log(title);
-        console.log(description);
-        console.log(location);
-        console.log(ammount);
-
-
-
+        // Geocodes the zipcode the user inputs
         $.ajax({
             url:'https://maps.googleapis.com/maps/api/geocode/json?address=+'+location,
             type: 'GET',
@@ -39,6 +30,7 @@ $(document).ready(function(){
 
         }).complete(function(){
             var dataObj = JSON.stringify(newProject);
+            // Posts the new project to the database
             $.ajax({
                 url: '/new_project/',
                 type: 'POST',
@@ -59,16 +51,12 @@ $(document).ready(function(){
         });
     });
 
-
+    // Creates the modals and tiles on the homepage
     $.ajax({
         url: '/get_project/',
         type: 'GET',
         data: 'json',
         success: function(response){
-            console.log(response);
-//            $('#projectTitle1').html(response.title);
-//            $('#projectName1').html(response.title);
-//            $('#projectDescription1').html(response.description);
             for (i=0; i<6; i++) {
                 project = response.project_list[i];
                 panel = i + 1;
@@ -81,9 +69,6 @@ $(document).ready(function(){
                 $('#projectImgModal'+ panel).html("<img src='media/"+project.image+"' class='img-responsive' alt=''>");
                 $('#studentModal' + panel).html(project.first_name);
                 $('#donate' + panel).html("<a href='/view_project/" + project.id + "'><button class='btn btn-success btnCustom'>Get More Info</button></a><br><br>")
-
-
-
             }
         },
         error:function(response){
@@ -92,6 +77,7 @@ $(document).ready(function(){
 
     });
 
+    // Gets the users projects
     $.ajax({
         url: '/get_user_project/',
         type: 'GET',
@@ -111,7 +97,6 @@ $(document).ready(function(){
 
     $(document).on('click', '#movePayment', function(){
         $('.donationInput').hide();
-//        $('#donateModal').modal('toggle');
         $('.thanksDonate').fadeIn('slow');
         var donationAmount = $('#donation_amount').val();
         var projectId = $('.projectID').val();
@@ -120,7 +105,7 @@ $(document).ready(function(){
         StripeCheckout.open({
             key: "pk_test_4V8sFPGyR79fKgbKT2ymeYEE",
             amount: donationAmount*100,
-            name: 'Demo Site',
+            name: 'Help Up',
             description: 'Make Your Donation Here'
 //            image:"/128x128.png"
 
@@ -143,6 +128,8 @@ $(document).ready(function(){
         })
     });
 
+
+    // Redirects to map centered on zip code the user input
     var zip;
     $('#googleSearch').keypress(function(event){
 
@@ -153,88 +140,6 @@ $(document).ready(function(){
             window.location.replace('/project_map/'+zip);
         }
     });
-
-
-
-
-//    var locationArray = [];
-//    $.ajax({
-//        url: '/get_location/',
-//        type: 'GET',
-//        data: 'json',
-//        success:function(response){
-//            console.log(response);
-//            locationArray = response.project_list
-//        },
-//        error: function(response){
-//            console.log(response)
-//
-//        }
-//
-//    });
-//    var geocoder;
-//
-//    var map;
-//    $('#searchBtn').on('click',function codeAddress(){
-//        var sAddress = document.getElementById('searchVal').value;
-//
-//        geocoder.geocode({'address': sAddress}, function(results, status) {
-//            if (status == google.maps.GeocoderStatus.OK){
-//                map.setCenter(results[0].geometry.location);
-//                console.log(results);
-//                for(i=0; i<locationArray.length; i++){
-//                    var markers = [];
-//                    var infowindows = [];
-//
-//                    var content = "<h2>"+locationArray[i].title+"</h2><p>"+locationArray[i].description+"</p><p><a href='/view_project/"+locationArray[i].id+"'>See More</a></p>";
-//                    var infowindow = new google.maps.InfoWindow({
-//                        content: content
-//                    });
-//
-//                    var marker = new google.maps.Marker({
-//                        map: map,
-//                        position: new google.maps.LatLng(locationArray[i].lat,locationArray[i].lng),
-//                        title: locationArray[i].title,
-//                        infowindow: infowindow
-//                    });
-//
-//                    infowindows.push(infowindow);
-//
-//
-//                    google.maps.event.addListener(marker, 'click', function(){
-//                        this.infowindow.open(map, this);
-//                    });
-//
-//                    markers.push(marker);
-//
-//
-//                }
-//
-//            }
-//            else{
-//
-//                alert("Geocode was not successful because: " + status);
-//            }
-//
-//        });
-//    });
-//
-//
-//    function initialize() {
-//        var mapOptions = {
-//            zoom: 11,
-//            center: new google.maps.LatLng(37.7833, -122.4167)
-//        };
-//        map = new google.maps.Map(document.getElementById('map-canvas'),
-//            mapOptions);
-//        geocoder = new google.maps.Geocoder();
-//    }
-//
-//
-//    google.maps.event.addDomListener(window, 'load', initialize);
-
-
-
 
 
 

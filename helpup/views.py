@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
@@ -15,6 +16,7 @@ from helpup.models import Project, Donation
 def home(request):
     return render(request, 'base_template.html', {'user': request.user})
 
+# Shows list of users projects and past donations
 @login_required()
 def profile(request):
     projects = Project.objects.filter(student=request.user)
@@ -27,31 +29,29 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            user = form.save()
+            new_user = authenticate(username=request.POST['username'],
+                                    password=request.POST['password1'])
+            login(request, new_user)
+            return redirect('profile')
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+
+#Creates an instance of a new project in database
 @csrf_exempt
 def new_project(request):
     if request.method == "POST":
-        # form = CreateProjectForm(request.POST, request.FILES)
-        # if form.is_valid():
-        #     title = form.cleaned_data['title']
-        #     description = form.cleaned_data['description']
-        #     location = form.cleaned_data['location']
         data = json.loads(request.body)
         title = data['title']
         description = data['description']
         location = data['location']
-        lng=data['lng']
-        lat=data['lat']
-        amount=data['amount']
-        # picture=data['picture']
+        lng = data['lng']
+        lat = data['lat']
+        amount = data['amount']
 
-        # print picture
-        new_project=Project.objects.create(
+        new_project = Project.objects.create(
             title=title,
             date_created=datetime.today(),
             description=description,
@@ -73,15 +73,10 @@ def new_project(request):
         return HttpResponse(json.dumps(project_info), content_type='application/json')
 
 
-
-
-
-
-
-
 def project_map(request, zipcode):
     return render(request, 'maps.html')
 
+#Gets the lat lng and project information of all projects for google maps
 @csrf_exempt
 def get_location(request):
     projects = Project.objects.all()
@@ -99,9 +94,10 @@ def get_location(request):
     return HttpResponse(json.dumps(data), content_type='application/json')
 
 
+
 @csrf_exempt
 def get_project(request):
-    projects = Project.objects.all()
+    projects = Project.objects.all()[:6]
     project_list = []
     for project in projects:
         project_info = {
@@ -179,6 +175,8 @@ def upload_picture(request, project_id):
     data = {'project': project, 'form': form}
     return render(request, 'upload_picture.html', data)
 
+
+# Creates an instance of a donation for project, and updates the amount needed
 @csrf_exempt
 def make_donation(request):
     if request.method == 'POST':
@@ -194,11 +192,8 @@ def make_donation(request):
             donor=donor,
             date=datetime.now()
         )
-        print project.donate
-        print type(new_donation.donation_amount)
         project.donate = project.donate + float(new_donation.donation_amount)
         project.save()
-        print project.donate
         donation_info = {
             'amount': new_donation.donation_amount,
             'project': new_donation.project.title,
@@ -235,5 +230,7 @@ def charge(request):
     return render(request, 'charge.html')
 
 
+def stripe_setup(request):
+    return render(request, 'stripe_setup.html')
 
 
