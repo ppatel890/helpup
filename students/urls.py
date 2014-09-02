@@ -25,7 +25,8 @@ urlpatterns = patterns('',
     url(r'^form/$', 'helpup.views.form', name='form'),
     url(r'^upload_picture/(?P<project_id>\w+)/$', 'helpup.views.upload_picture', name='upload_picture'),
     url(r'^charge/$', 'helpup.views.charge', name='charge'),
-    url(r'^make_donation/$', 'helpup.views.make_donation', name='make_donation')
+    url(r'^make_donation/$', 'helpup.views.make_donation', name='make_donation'),
+    url(r'^stripe_setup/$', 'helpup.views.stripe_setup', name='stripe_setup'),
 
 )
 

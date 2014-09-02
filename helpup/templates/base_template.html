@@ -26,6 +26,8 @@
 
     <link href="{% static 'css/index.css' %}" rel="stylesheet">
 
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -56,9 +58,6 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
                         <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll navBarBtn">
-                        <a href="#portfolio">Projects</a>
                     </li>
                     {% if user.is_authenticated %}
                             <li class="page-scroll navBarBtn">
@@ -433,7 +432,7 @@
             </div>
             <h2>Login</h2>
             <hr class="star-primary">
-            <form method="post" action="/login/">
+            <form method="post" action="/login/" data-parsley-validate>
                 {% csrf_token %}
                 <p><label for="id_username">Username:</label> <input id="id_username" maxlength="254" name="username" type="text" /></p>
                 <p><label for="id_password">Password:</label> <input id="id_password" name="password" type="password" /></p>
@@ -457,7 +456,7 @@
             <hr class="star-primary">
 
             <form method="post" action="/register/">
-                <input type='hidden' name='csrfmiddlewaretoken' value='DkwYotKZc8O3XKCzFjsuVkxm7rRTtzVP' />
+                {% csrf_token %}
                 <p><label for="id_first_name">First name:</label> <input id="id_first_name" maxlength="50" name="first_name" type="text" /></p>
                 <p><label for="id_last_name">Last name:</label> <input id="id_last_name" maxlength="50" name="last_name" type="text" /></p>
                 <p><label for="id_username">Username:</label> <input id="id_username" maxlength="30" name="username" type="text" /></p>
